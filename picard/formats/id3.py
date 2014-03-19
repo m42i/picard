@@ -304,7 +304,7 @@ class ID3File(File):
                 text = metadata['discnumber']
             tags.add(id3.TPOS(encoding=0, text=text))
 
-        if config.setting['save_images_to_tags']:
+        if config.setting['save_images_to_tags'] or 'coverart' in config.setting['preserved_tags']:
             # This is necessary because mutagens HashKey for APIC frames only
             # includes the FrameID (APIC) and description - it's basically
             # impossible to save two images, even of different types, without
