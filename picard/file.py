@@ -131,14 +131,18 @@ class File(QtCore.QObject, Item):
 
         for tag in re.split(r"\s*,\s*", preserve) + File._default_preserved_tags:
             values = self.orig_metadata.getall(tag)
-            if tag == "coverart": 
-                for mime, data in self.saved_metadata.images:
-                    self.metadata.add_image(mime, data)
-            elif values:
+            if values:
                 saved_metadata[tag] = values
+        if config.setting['preserve_coverimage']:
+            for mime, data in self.metadata.images:
+                saved_metadata.add_image(mime, data)
         self.metadata.copy(metadata)
         for tag, values in saved_metadata.iteritems():
             self.metadata.set(tag, values)
+
+        if config.setting['preserve_coverimage']:
+            for mime, data in saved_metadata.images:
+                self.metadata.add_image(mime, data)
 
         self.metadata["acoustid_id"] = acoustid
 

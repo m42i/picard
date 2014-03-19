@@ -35,6 +35,7 @@ class TagsOptionsPage(OptionsPage):
     options = [
         config.BoolOption("setting", "clear_existing_tags", False),
         config.TextOption("setting", "preserved_tags", ""),
+        config.BoolOption("setting", "preserve_coverimage", False),
         config.BoolOption("setting", "write_id3v1", True),
         config.BoolOption("setting", "write_id3v23", True),
         config.TextOption("setting", "id3v2_encoding", "utf-16"),
@@ -74,6 +75,7 @@ class TagsOptionsPage(OptionsPage):
         self.ui.remove_ape_from_mp3.setChecked(config.setting["remove_ape_from_mp3"])
         self.ui.remove_id3_from_flac.setChecked(config.setting["remove_id3_from_flac"])
         self.ui.preserved_tags.setText(config.setting["preserved_tags"])
+        self.ui.preserve_coverimage.setChecked(self.config.setting["preserve_coverimage"])
         self.update_encodings()
 
     def save(self):
@@ -95,6 +97,7 @@ class TagsOptionsPage(OptionsPage):
         config.setting["remove_ape_from_mp3"] = self.ui.remove_ape_from_mp3.isChecked()
         config.setting["remove_id3_from_flac"] = self.ui.remove_id3_from_flac.isChecked()
         config.setting["preserved_tags"] = unicode(self.ui.preserved_tags.text())
+        config.setting["preserve_coverimage"] = self.ui.preserve_coverimage.isChecked()
         self.tagger.window.enable_tag_saving_action.setChecked(not config.setting["dont_write_tags"])
 
     def update_encodings(self):
