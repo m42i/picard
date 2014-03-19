@@ -165,7 +165,7 @@ class ASFFile(File):
 
         if config.setting['clear_existing_tags']:
             file.tags.clear()
-        if config.setting['save_images_to_tags']:
+        if config.settings['save_images_to_tags'] or config.settings['preserve_coverimage']:
             cover = []
             for image in metadata.images:
                 if not save_this_image_to_tags(image):

@@ -170,7 +170,7 @@ class VCommentFile(File):
         if "totaldiscs" in metadata:
             tags.setdefault(u"DISCTOTAL", []).append(metadata["totaldiscs"])
 
-        if config.setting['save_images_to_tags']:
+        if config.settings['save_images_to_tags'] or config.settings['preserve_coverimage']:
             for image in metadata.images:
                 if not save_this_image_to_tags(image):
                     continue

@@ -189,7 +189,7 @@ class MP4File(File):
             else:
                 file.tags["disk"] = [(int(metadata["discnumber"]), 0)]
 
-        if config.setting['save_images_to_tags']:
+        if config.settings['save_images_to_tags'] or config.settings['preserve_coverimage']:
             covr = []
             for image in metadata.images:
                 if not save_this_image_to_tags(image):
