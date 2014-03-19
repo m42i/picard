@@ -12,6 +12,7 @@ settings = {
     'enabled_plugins': '',
     'clear_existing_tags': False,
     'remove_images_from_tags': False,
+    'preserve_cover_image' : True,
     'write_id3v1': True,
     'id3v2_encoding': 'utf-8',
     'save_images_to_tags': True,
@@ -545,12 +546,16 @@ class TestCoverArt(unittest.TestCase):
                 metadata = Metadata()
                 imgdata = tests[t]['head'] + dummyload
                 metadata.add_image(tests[t]['mime'], imgdata)
+                metadata.add_image(tests[t]['mime'], imgdata)
                 f._save(self.filename, metadata)
 
                 f = picard.formats.open(self.filename)
                 loaded_metadata = f._load(self.filename)
-                image = loaded_metadata.images[0]
-                self.assertEqual(image["mime"], tests[t]['mime'])
-                self.assertEqual(image["data"], imgdata)
+                image_0 = loaded_metadata.images[0]
+                image_1 = loaded_metadata.images[1]
+                self.assertEqual(image_0["mime"], tests[t]['mime'])
+                self.assertEqual(image_0["data"], imgdata)
+                self.assertEqual(image_1["mime"], tests[t]['mime'])
+                self.assertEqual(image_1["data"], imgdata)
         finally:
             self._tear_down()
